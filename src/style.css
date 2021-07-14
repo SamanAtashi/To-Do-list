@@ -1,7 +1,40 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 body {
-  background-color: bisque;
+	border: 2px solid red;
+	height: 100vh;
+	width: 100vw;
 }
 
-.hello {
-  color: red;
+main {
+	width: 90%;
+	flex-direction: column;
+}
+
+.d-flex {
+	display: flex;
+}
+.center {
+	justify-content: center;
+	align-items: center;
+}
+.border {
+	border: 1px solid rgb(224, 224, 224);
+	padding: 1rem;
+	width: 100%;
+}
+.item {
+	padding: 1rem;
+	width: 100%;
+    list-style: none;
+}
+
+.wrapper {
+	width: 50%;
+	flex-direction: column;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

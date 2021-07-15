@@ -12,8 +12,12 @@ function Build() {
     completed: false,
     index,
   });
+
   index += 1;
 }
+console.log(list);
+console.log(list.keys[0]);
+console.log(window.localStorage.setItem(index, list[index]));
 
 function showInList() {
   const getAdd = document.getElementById('getAdd');
@@ -36,13 +40,16 @@ function showInList() {
   show.appendChild(createLi);
 }
 
-const enterBtn = document.getElementById('getAdd');
-
-enterBtn.addEventListener('keyup', (event) => {
+document.getElementById('getAdd').addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
     event.preventDefault();
     // document.getElementById('myBtn').click();
     showInList();
     Build();
   }
+});
+
+document.getElementById('getAdd-btn').addEventListener('click', () => {
+  showInList();
+  Build();
 });

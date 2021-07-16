@@ -1,55 +1,76 @@
 import './style.css';
+import { statusUpdate } from './statusUpdate.js';
 
-const list = [];
+function buildElementandShow() {
+  const getAdd = document.getElementById('getAdd'); // grab input text
+  const show = document.getElementById('show'); // grab ul
 
-let index = 1;
-
-function Build() {
-  const getAdd = document.getElementById('getAdd');
-
-  list.push({
-    description: getAdd.value,
-    completed: false,
-    index,
-  });
-
-  index += 1;
-}
-console.log(list);
-console.log(list.keys[0]);
-console.log(window.localStorage.setItem(index, list[index]));
-
-function showInList() {
-  const getAdd = document.getElementById('getAdd');
-  const show = document.getElementById('show');
   const createLi = document.createElement('li');
   createLi.classList.add('item');
 
   const createCheckBox = document.createElement('input');
   createCheckBox.type = 'checkbox';
-  createCheckBox.name = 'name';
-  createCheckBox.id = 'checkboxId';
+  createCheckBox.name = 'checkbox';
+  createCheckBox.id = `item${globalIndex}`;
+
   createCheckBox.classList.add('space-right');
+  createCheckBox.classList.add('checked');
 
   const createLabel = document.createElement('label');
-  createLabel.htmlFor = 'checkboxId';
+  createLabel.htmlFor = 'checked';
   createLabel.appendChild(document.createTextNode(getAdd.value));
 
+  show.appendChild(createLi);
   createLi.appendChild(createCheckBox);
   createLi.appendChild(createLabel);
-  show.appendChild(createLi);
+}
+
+export const list = [];
+
+// eslint-disable-next-line import/prefer-default-export
+export let globalIndex = 1;
+
+function buildToPush() {
+  const getAdd = document.getElementById('getAdd');
+
+  list.push({
+    description: getAdd.value,
+    completed: false,
+    globalIndex,
+  });
+
+  globalIndex += 1;
+}
+
+function storeLocally() {
+  const stringifyList = JSON.stringify(list[globalIndex - 2]);
+  localStorage.setItem(globalIndex - 1, stringifyList);
+}
+
+export function resultFunction() {
+  const result = list.filter((obj) => obj.globalIndex === globalIndex - 1)[0];
+  return result;
 }
 
 document.getElementById('getAdd').addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
     event.preventDefault();
-    // document.getElementById('myBtn').click();
-    showInList();
-    Build();
+    buildElementandShow();
+    buildToPush();
+    storeLocally();
   }
 });
 
 document.getElementById('getAdd-btn').addEventListener('click', () => {
-  showInList();
-  Build();
+  buildElementandShow();
+  buildToPush();
+  storeLocally();
+});
+
+document.getElementById('show').addEventListener('click', (e) => {
+  if (e.target && e.target.id) {
+    if (list.length > 0) {
+      statusUpdate(e.target);
+    }
+  }
 });

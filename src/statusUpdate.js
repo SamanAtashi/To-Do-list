@@ -1,19 +1,15 @@
-// import { list } from './index.js';
+/* eslint-disable import/prefer-default-export */
+import { globalIndex, resultFunction, list } from './index.js';
 
-// export function updatingList() {
+// eslint-disable-next-line import/prefer-default-export
 
-  
-// }
+export function statusUpdate(theItem) {
+  const theId = parseInt(theItem.id.match(/\d+/g)[0]);
 
-// function myFunction() {
-// 	var checkBox = document.getElementById('myCheck');
-// 	var text = document.getElementById('text');
-// 	if (checkBox.checked == true) {
-// 		text.style.display = 'block';
-// 	} else {
-// 		text.style.display = 'none';
-// 	}
-// }
-
-// toggle the checked
-// if checked -->update completed
+  if (list[theId - 1].completed === false) {
+    list[theId - 1].completed = true;
+  } else {
+    list[theId - 1].completed = false;
+  }
+  localStorage.setItem(theId, JSON.stringify(list[theId - 1]));
+}
